@@ -204,6 +204,7 @@ class TimelineTileBuilder {
     bool addSemanticIndexes = true,
     bool useFlexContents = true,
     bool useFlexOppositeContents = true,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
   }) {
     return TimelineTileBuilder(
       itemCount: itemCount,
@@ -228,6 +229,7 @@ class TimelineTileBuilder {
       indicatorPositionBuilder: indicatorPositionBuilder,
       useFlexContents: useFlexContents,
       useFlexOppositeContents: useFlexOppositeContents,
+      mainAxisAlignment: mainAxisAlignment,
     );
   }
 
@@ -253,6 +255,7 @@ class TimelineTileBuilder {
     IndexedValueBuilder<double>? itemExtentBuilder,
     IndexedValueBuilder<double>? nodePositionBuilder,
     IndexedValueBuilder<double>? indicatorPositionBuilder,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
   }) {
     return TimelineTileBuilder(
       itemCount: itemCount,
@@ -280,6 +283,7 @@ class TimelineTileBuilder {
       itemExtentBuilder: itemExtentBuilder,
       nodePositionBuilder: nodePositionBuilder,
       indicatorPositionBuilder: indicatorPositionBuilder,
+      mainAxisAlignment: mainAxisAlignment,
     );
   }
 
@@ -310,6 +314,7 @@ class TimelineTileBuilder {
     bool addSemanticIndexes = true,
     bool useFlexContents = true,
     bool useFlexOppositeContents = true,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
   }) {
     return TimelineTileBuilder(
       itemCount: itemCount,
@@ -328,6 +333,7 @@ class TimelineTileBuilder {
       indicatorPositionBuilder: indicatorPositionBuilder,
       useFlexContents: useFlexContents,
       useFlexOppositeContents: useFlexOppositeContents,
+      mainAxisAlignment: mainAxisAlignment,
     );
   }
 
@@ -355,6 +361,7 @@ class TimelineTileBuilder {
     IndexedValueBuilder<TimelineThemeData>? themeBuilder,
     bool useFlexContents = true,
     bool useFlexOppositeContents = true,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
   }) {
     assert(
       itemExtent == null || itemExtentBuilder == null,
@@ -401,6 +408,7 @@ class TimelineTileBuilder {
       },
       useFlexContents: useFlexContents,
       useFlexOppositeContents: useFlexOppositeContents,
+      mainAxisAlignment: mainAxisAlignment,
       itemCount: itemCount,
     );
   }
@@ -410,12 +418,14 @@ class TimelineTileBuilder {
     required this.itemCount,
     this.useFlexOppositeContents = false,
     this.useFlexContents = false,
+    this.mainAxisAlignment = MainAxisAlignment.center,
   }) : assert(itemCount >= 0);
 
   final IndexedWidgetBuilder _builder;
   final int itemCount;
   final bool useFlexOppositeContents;
   final bool useFlexContents;
+  final MainAxisAlignment mainAxisAlignment;
 
   Widget build(BuildContext context, int index) {
     return _builder(context, index);

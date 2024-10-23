@@ -24,19 +24,20 @@ enum TimelineNodeAlign {
 /// displayed on the start side.
 /// The [node] is displayed between the two.
 class TimelineTile extends StatelessWidget {
-  const TimelineTile({
-    super.key,
-    this.direction,
-    required this.node,
-    this.nodeAlign = TimelineNodeAlign.basic,
-    this.nodePosition,
-    this.contents,
-    this.oppositeContents,
-    this.mainAxisExtent,
-    this.crossAxisExtent,
-    this.useFlexOppositeContents = true,
-    this.useFlexContents = true,
-  })  : assert(
+  const TimelineTile(
+      {super.key,
+      this.direction,
+      required this.node,
+      this.nodeAlign = TimelineNodeAlign.basic,
+      this.nodePosition,
+      this.contents,
+      this.oppositeContents,
+      this.mainAxisExtent,
+      this.crossAxisExtent,
+      this.useFlexOppositeContents = true,
+      this.useFlexContents = true,
+      this.mainAxisAlignment = MainAxisAlignment.center})
+      : assert(
           nodeAlign == TimelineNodeAlign.basic ||
               (nodeAlign != TimelineNodeAlign.basic && nodePosition == null),
           'Cannot provide both a nodeAlign and a nodePosition',
@@ -86,6 +87,7 @@ class TimelineTile extends StatelessWidget {
   /// determine their own extent because the because it don't use the Intrinsic
   /// widget([IntrinsicHeight]/[IntrinsicWidth]) when building.
   final double? mainAxisExtent;
+  final MainAxisAlignment mainAxisAlignment;
 
   /// The extent of the child in the non-scrolling axis.
   ///
@@ -148,7 +150,7 @@ class TimelineTile extends StatelessWidget {
     switch (direction) {
       case Axis.vertical:
         result = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: mainAxisAlignment,
           children: items,
         );
 
@@ -173,7 +175,7 @@ class TimelineTile extends StatelessWidget {
         break;
       case Axis.horizontal:
         result = Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: mainAxisAlignment,
           children: items,
         );
         if (mainAxisExtent != null) {
