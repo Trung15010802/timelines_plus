@@ -184,6 +184,7 @@ class TimelineTileBuilder {
   ///
   ///  * [TimelineTileBuilder.connectedFromStyle], which builds connected tiles
   ///  from style.
+  ///
   factory TimelineTileBuilder.connected({
     required int itemCount,
     ContentsAlign contentsAlign = ContentsAlign.basic,
@@ -201,6 +202,8 @@ class TimelineTileBuilder {
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
+    bool useFlexContents = true,
+    bool useFlexOppositeContents = true,
   }) {
     return TimelineTileBuilder(
       itemCount: itemCount,
@@ -223,6 +226,8 @@ class TimelineTileBuilder {
       itemExtentBuilder: itemExtentBuilder,
       nodePositionBuilder: nodePositionBuilder,
       indicatorPositionBuilder: indicatorPositionBuilder,
+      useFlexContents: useFlexContents,
+      useFlexOppositeContents: useFlexOppositeContents,
     );
   }
 
@@ -303,6 +308,8 @@ class TimelineTileBuilder {
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
+    bool useFlexContents = true,
+    bool useFlexOppositeContents = true,
   }) {
     return TimelineTileBuilder(
       itemCount: itemCount,
@@ -319,6 +326,8 @@ class TimelineTileBuilder {
       itemExtentBuilder: itemExtentBuilder,
       nodePositionBuilder: nodePositionBuilder,
       indicatorPositionBuilder: indicatorPositionBuilder,
+      useFlexContents: useFlexContents,
+      useFlexOppositeContents: useFlexOppositeContents,
     );
   }
 
@@ -344,6 +353,8 @@ class TimelineTileBuilder {
     IndexedValueBuilder<bool?>? nodeItemOverlapBuilder,
     IndexedValueBuilder<double>? indicatorPositionBuilder,
     IndexedValueBuilder<TimelineThemeData>? themeBuilder,
+    bool useFlexContents = true,
+    bool useFlexOppositeContents = true,
   }) {
     assert(
       itemExtent == null || itemExtentBuilder == null,
@@ -388,6 +399,8 @@ class TimelineTileBuilder {
           return tile;
         }
       },
+      useFlexContents: useFlexContents,
+      useFlexOppositeContents: useFlexOppositeContents,
       itemCount: itemCount,
     );
   }
@@ -395,10 +408,14 @@ class TimelineTileBuilder {
   const TimelineTileBuilder._(
     this._builder, {
     required this.itemCount,
+    this.useFlexOppositeContents = false,
+    this.useFlexContents = false,
   }) : assert(itemCount >= 0);
 
   final IndexedWidgetBuilder _builder;
   final int itemCount;
+  final bool useFlexOppositeContents;
+  final bool useFlexContents;
 
   Widget build(BuildContext context, int index) {
     return _builder(context, index);
