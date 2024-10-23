@@ -266,8 +266,12 @@ class ThemePageState extends State<ThemePage> {
                   children: [
                     TimelineTile(
                       mainAxisExtent: 100,
-                      crossAxisExtent: 100,
-                      oppositeContents: Container(color: Colors.amber),
+                      // crossAxisExtent: 100,
+                      useFlexContents: true,
+                      useFlexOppositeContents: false,
+                      direction: Axis.vertical,
+                      oppositeContents:
+                          Container(width: 100, color: Colors.amber),
                       node: const TimelineNode(
                         startConnector: SolidLineConnector(),
                         endConnector: SolidLineConnector(),

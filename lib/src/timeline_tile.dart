@@ -34,6 +34,8 @@ class TimelineTile extends StatelessWidget {
     this.oppositeContents,
     this.mainAxisExtent,
     this.crossAxisExtent,
+    this.useFlexOppositeContents = true,
+    this.useFlexContents = true,
   })  : assert(
           nodeAlign == TimelineNodeAlign.basic ||
               (nodeAlign != TimelineNodeAlign.basic && nodePosition == null),
@@ -45,6 +47,8 @@ class TimelineTile extends StatelessWidget {
   /// The axis along which the timeline scrolls.
   /// {@endtemplate}
   final Axis? direction;
+  final bool useFlexOppositeContents;
+  final bool useFlexContents;
 
   /// A widget that displays indicator and two connectors.
   final Widget node;
@@ -107,16 +111,18 @@ class TimelineTile extends StatelessWidget {
 
     var minNodeExtent = TimelineTheme.of(context).indicatorTheme.size ?? 0.0;
     var items = [
-      if (nodeFlex > 0)
+      if (nodeFlex > 0 && useFlexOppositeContents)
         Expanded(
           flex: nodeFlex.toInt(),
           child: Align(
             alignment: direction == Axis.vertical
                 ? AlignmentDirectional.centerEnd
                 : Alignment.bottomCenter,
-            child: oppositeContents ?? const SizedBox.shrink(),
+            child: oppositeContents ?? const Offstage(),
           ),
-        ),
+        )
+      else
+        oppositeContents ?? const Offstage(),
       ConstrainedBox(
         constraints: BoxConstraints(
           minWidth: direction == Axis.vertical ? minNodeExtent : 0.0,
@@ -124,7 +130,7 @@ class TimelineTile extends StatelessWidget {
         ),
         child: node,
       ),
-      if (nodeFlex < kFlexMultiplier)
+      if (nodeFlex < kFlexMultiplier && useFlexContents)
         Expanded(
           flex: (kFlexMultiplier - nodeFlex).toInt(),
           child: Align(
@@ -133,7 +139,9 @@ class TimelineTile extends StatelessWidget {
                 : Alignment.topCenter,
             child: contents ?? const SizedBox.shrink(),
           ),
-        ),
+        )
+      else
+        contents ?? const Offstage(),
     ];
 
     Widget result;
