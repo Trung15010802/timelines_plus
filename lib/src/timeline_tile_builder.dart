@@ -256,6 +256,8 @@ class TimelineTileBuilder {
     IndexedValueBuilder<double>? nodePositionBuilder,
     IndexedValueBuilder<double>? indicatorPositionBuilder,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
+    bool useFlexContents = true,
+    bool useFlexOppositeContents = true,
   }) {
     return TimelineTileBuilder(
       itemCount: itemCount,
@@ -284,6 +286,8 @@ class TimelineTileBuilder {
       nodePositionBuilder: nodePositionBuilder,
       indicatorPositionBuilder: indicatorPositionBuilder,
       mainAxisAlignment: mainAxisAlignment,
+      useFlexContents: useFlexContents,
+      useFlexOppositeContents: useFlexOppositeContents,
     );
   }
 
@@ -383,6 +387,9 @@ class TimelineTileBuilder {
       (context, index) {
         final tile = TimelineTile(
           mainAxisExtent: itemExtent ?? itemExtentBuilder?.call(context, index),
+          useFlexContents: useFlexContents,
+          useFlexOppositeContents: useFlexOppositeContents,
+          mainAxisAlignment: mainAxisAlignment,
           node: TimelineNode(
             indicator: indicatorBuilder?.call(context, index) ??
                 Indicator.transparent(),
@@ -406,8 +413,6 @@ class TimelineTileBuilder {
           return tile;
         }
       },
-      useFlexContents: useFlexContents,
-      useFlexOppositeContents: useFlexOppositeContents,
       mainAxisAlignment: mainAxisAlignment,
       itemCount: itemCount,
     );
@@ -416,15 +421,12 @@ class TimelineTileBuilder {
   const TimelineTileBuilder._(
     this._builder, {
     required this.itemCount,
-    this.useFlexOppositeContents = false,
-    this.useFlexContents = false,
     this.mainAxisAlignment = MainAxisAlignment.center,
   }) : assert(itemCount >= 0);
 
   final IndexedWidgetBuilder _builder;
   final int itemCount;
-  final bool useFlexOppositeContents;
-  final bool useFlexContents;
+
   final MainAxisAlignment mainAxisAlignment;
 
   Widget build(BuildContext context, int index) {
